@@ -1,0 +1,88 @@
+<html ng-app="myApp">
+	<head>
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js" />
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0-beta.2/angular-sanitize.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-route.js"></script>
+		<!-- Latest compiled and minified CSS -->
+		
+		<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+	
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+		<!-- Optional theme -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+	
+		<!-- Latest compiled and minified JavaScript -->
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+		
+		<script src="controller.js"></script>
+		<link rel="stylesheet" type="text/css" href="app.css">
+		
+		<style type="text/css">
+			.img-teste img {
+				width: 200px;    /* largura da imagem */
+				height: 250px;   /*  altura da imagem  */
+			}
+		</style>
+	</head>
+	<body ng-controller="StoreController as store">
+		<h1>Hello, world!</h1>
+		<form name="produtoForm" ng-submit="produtoForm.$valid && store.addProduto(store.produtos)" novalidate>
+			<h4>Cadastro de Produtos.</h4>
+			
+			<fieldset class="form-group">
+				<input ng-model="store.produto.nome" class="form-control" placeholder="Nome do produto" title="Produto" required/>
+			</fieldset>
+			<fieldset class="form-group">
+				<input ng-model="store.produto.preco" class="form-control" placeholder="Preço do produto" title="Preco" required/>
+			</fieldset>
+			<fieldset class="form-group">
+				{{produtoForm.$valid}}
+                <input type="submit" class="btn btn-primary pull-right" value="Cadastrar Produto." />
+             </fieldset>
+			
+		</form>
+		<div class="list-group">
+			<div class="list-group-item" ng-repeat="produto in store.produtos">
+				<h3>
+		          {{produto.nome}}
+		          <em class="pull-right">{{produto.preco | currency}}</em>
+		        </h3>
+		        <!-- Image Gallery  -->
+		        <section ng-show="produto.imagem.length" class="img-teste">
+			        <!-- Fail 1 Message -->
+			        <div ng-show="produto.imagem">
+			          <img class="img img-circle img-thumbnail center-block" ng-src="{{produto.imagem}}" />
+			        </div>
+				</section>
+				
+				<section class="tab" ng-controller="TabController as tag">
+					<ul class="nav nav-pills">
+			        	<li ng-class="{ active: tab.isSet(1) }">
+			            	<a href ng-click="tab.setTab(1)">Descricao</a>
+			         	</li>
+			          	<li ng-class="{active: tab.isSet(2)}">
+			            	<a href ng-click="tab.setTab(2)">Specs</a>
+			          	</li>
+			          	<li ng-class="{active: tab.isSet(3)}">
+			            	<a href ng-click="tab.setTab(3)">Reviews</a>
+			            </li>
+			        </ul>
+			        <div data-ng-show="tab.isSet(1)">
+			          <h4>Descricao</h4>
+			          <blockquote></blockquote>
+			        </div>
+			        <div ng-show="tab.isSet(2)">
+			          <h4>Specs</h4>
+			          <blockquote>Shine: </blockquote>
+			        </div>
+			        <div ng-show="tab.isSet(3)">
+			          <h4>Reviews</h4>
+			          <blockquote></blockquote>
+			        </div>
+				</section>
+			</div>
+		</div>
+	</body>
+</html>
